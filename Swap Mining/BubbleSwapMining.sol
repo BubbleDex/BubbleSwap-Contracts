@@ -2235,7 +2235,7 @@ contract BubbleSwapMining is TokenReward, ISwapMining {
         uint256
     )
     {
-        require(_pid <= poolInfo.length - 1, 'SwapMining: Not find this pool');
+        require(_pid < poolInfo.length, 'SwapMining: Not find this pool');
         PoolInfo memory pool = poolInfo[_pid];
         address token0 = ISpePool(pool.pair).token0();
         address token1 = ISpePool(pool.pair).token1();
