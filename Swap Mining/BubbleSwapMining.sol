@@ -2179,7 +2179,7 @@ contract BubbleSwapMining is TokenReward, ISwapMining {
     // factory address
     address public factory;
 
-    address public targetToken;
+    address public constant targetToken;
     // pair corresponding pid
     mapping(address => uint256) public pairOfPid;
 
