@@ -1,6 +1,3 @@
-/**
- *Submitted for verification at BscScan.com on 2021-09-23
-*/
 
 // File: @openzeppelin/contracts/utils/Context.sol
 
@@ -68,35 +65,24 @@ abstract contract Ownable is Context {
         return _owner;
     }
 
-    /**
-     * @dev Throws if called by any account other than the owner.
-     */
-    modifier onlyOwner() {
-        require(owner() == _msgSender(), "Ownable: caller is not the owner");
-        _;
-    }
+   address public pendingOwner;
 
-    /**
-     * @dev Leaves the contract without owner. It will not be possible to call
-     * `onlyOwner` functions anymore. Can only be called by the current owner.
-     *
-     * NOTE: Renouncing ownership will leave the contract without an owner,
-     * thereby removing any functionality that is only available to the owner.
-     */
-    function renounceOwnership() public virtual onlyOwner {
-        emit OwnershipTransferred(_owner, address(0));
-        _owner = address(0);
-    }
+ function renounceOwnership() public onlyOwner {
+ _owner = address(0);
+ pendingOwner = address(0);
+ emit OwnershipTransferred(_owner, address(0));
+ }
 
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Can only be called by the current owner.
-     */
-    function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
-        emit OwnershipTransferred(_owner, newOwner);
-        _owner = newOwner;
-    }
+ function transferOwnership(address newOwner) public onlyOwner {
+ require(address(0) != newOwner, "pendingOwner set to the zero address.");
+ pendingOwner = newOwner;
+} 
+function claimOwnership() public {
+ require(msg.sender == pendingOwner, "caller != pending owner");
+
+ _owner = pendingOwner;
+ pendingOwner = address(0);
+ emit OwnershipTransferred(_owner, pendingOwner);
 }
 
 // File: @sheepdex/core/contracts/lib/Operatable.sol
