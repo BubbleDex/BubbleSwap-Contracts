@@ -65,6 +65,7 @@ abstract contract Ownable is Context {
     /**
      * @dev Returns the address of the current owner.
      */
+     address public pendingOwner;
     function owner() public view virtual returns (address) {
         return _owner;
     }
