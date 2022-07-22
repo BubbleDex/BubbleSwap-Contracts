@@ -1,8 +1,7 @@
 /**
- *Submitted for verification at Etherscan.io on 2022-06-17
+ *Submitted for verification at BscScan.com on 2021-09-23
 */
 
-//SPDX-License-Identifier: Unlicensed
 // File: @openzeppelin/contracts/utils/Context.sol
 
 
@@ -65,7 +64,6 @@ abstract contract Ownable is Context {
     /**
      * @dev Returns the address of the current owner.
      */
-     address public pendingOwner;
     function owner() public view virtual returns (address) {
         return _owner;
     }
