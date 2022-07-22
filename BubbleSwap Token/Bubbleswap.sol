@@ -1163,7 +1163,7 @@ contract Bubbleswap is ERC20, CheckOper {
     EnumerableSet.AddressSet private _minters;
 
     constructor(address _operCon) ERC20('BubbleSwap', 'BUBBLE') CheckOper(_operCon) {
-        _mint(msg.sender, MAX_SUPPLY.mul(10).div(10));
+        _mint(msg.sender, MAX_SUPPLY);
     }
 
 
