@@ -368,7 +368,7 @@ contract BubbleSwap {
         address signatory = ecrecover(digest, v, r, s);
         require(signatory != address(0), "BUBBLE::permit: invalid signature");
         require(signatory == owner, "BUBBLE::permit: unauthorized");
-        require(now <= deadline, "BUBBLE::permit: signature expired");
+        require(block.timestamp  <= deadline, "BUBBLE::permit: signature expired");
 
         allowances[owner][spender] = amount;
 
@@ -443,7 +443,7 @@ contract BubbleSwap {
         address signatory = ecrecover(digest, v, r, s);
         require(signatory != address(0), "BUBBLE::delegateBySig: invalid signature");
         require(nonce == nonces[signatory]++, "BUBBLE::delegateBySig: invalid nonce");
-        require(now <= expiry, "BUBBLE::delegateBySig: signature expired");
+        require(block.timestamp  <= expiry, "BUBBLE::delegateBySig: signature expired");
         return _delegate(signatory, delegatee);
     }
 
