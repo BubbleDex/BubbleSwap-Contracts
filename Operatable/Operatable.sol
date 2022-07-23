@@ -64,25 +64,26 @@ abstract contract Ownable is Context {
    address public pendingOwner;
 
 
- function renounceOwnership() public onlyOwner {
- _owner = address(0);
- pendingOwner = address(0);
- emit OwnershipTransferred(_owner, address(0));
- 
- }
+    function renounceOwnership() public onlyOwner {
+     _owner = address(0);
+     pendingOwner = address(0);
+     emit OwnershipTransferred(_owner, address(0));
+    }
 
- function transferOwnership(address newOwner) public onlyOwner {
- require(address(0) != newOwner, "pendingOwner set to the zero address.");
- pendingOwner = newOwner;
-} 
+    function transferOwnership(address newOwner) public onlyOwner {
+     require(address(0) != newOwner, "pendingOwner set to the zero address.");
+     pendingOwner = newOwner;
+    
+    } 
 
-function claimOwnership() public {
- require(msg.sender == pendingOwner, "caller != pending owner");
+    function claimOwnership() public {
+     require(msg.sender == pendingOwner, "caller != pending owner");
 
- _owner = pendingOwner;
- pendingOwner = address(0);
- emit OwnershipTransferred(_owner, pendingOwner);
- 
+     _owner = pendingOwner;
+     pendingOwner = address(0);
+     emit OwnershipTransferred(_owner, pendingOwner);
+    }
+
 }
 
 // File: @sheepdex/core/contracts/lib/Operatable.sol
