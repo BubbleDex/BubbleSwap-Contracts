@@ -188,18 +188,18 @@ library SafeMath {
     }
 }
 
-contract BUBBLE {
+contract BUBBLEOperatable {
     /// @notice EIP-20 token name for this token
     string public constant name = "BubbleSwap";
 
     /// @notice EIP-20 token symbol for this token
-    string public constant symbol = "QUICK";
+    string public constant symbol = "BUBBLE";
 
     /// @notice EIP-20 token decimals for this token
     uint8 public constant decimals = 18;
 
     /// @notice Total number of tokens in circulation
-    uint public totalSupply = 0; // QUICK
+    uint public totalSupply = 0; // BUBBLE
 
     /// @notice Allowance amounts on behalf of others
     mapping (address => mapping (address => uint96)) internal allowances;
@@ -485,8 +485,8 @@ contract BUBBLE {
         require(src != address(0), "BUBBLE::_transferTokens: cannot transfer from the zero address");
         require(dst != address(0), "BUBBLE::_transferTokens: cannot transfer to the zero address");
 
-        balances[src] = sub96(balances[src], amount, "Quick::_transferTokens: transfer amount exceeds balance");
-        balances[dst] = add96(balances[dst], amount, "Quick::_transferTokens: transfer amount overflows");
+        balances[src] = sub96(balances[src], amount, "BUBBLE::_transferTokens: transfer amount exceeds balance");
+        balances[dst] = add96(balances[dst], amount, "BUBBLE::_transferTokens: transfer amount overflows");
         emit Transfer(src, dst, amount);
 
         _moveDelegates(delegates[src], delegates[dst], amount);
@@ -497,21 +497,21 @@ contract BUBBLE {
             if (srcRep != address(0)) {
                 uint32 srcRepNum = numCheckpoints[srcRep];
                 uint96 srcRepOld = srcRepNum > 0 ? checkpoints[srcRep][srcRepNum - 1].votes : 0;
-                uint96 srcRepNew = sub96(srcRepOld, amount, "Quick::_moveVotes: vote amount underflows");
+                uint96 srcRepNew = sub96(srcRepOld, amount, "BUBBLE::_moveVotes: vote amount underflows");
                 _writeCheckpoint(srcRep, srcRepNum, srcRepOld, srcRepNew);
             }
 
             if (dstRep != address(0)) {
                 uint32 dstRepNum = numCheckpoints[dstRep];
                 uint96 dstRepOld = dstRepNum > 0 ? checkpoints[dstRep][dstRepNum - 1].votes : 0;
-                uint96 dstRepNew = add96(dstRepOld, amount, "Quick::_moveVotes: vote amount overflows");
+                uint96 dstRepNew = add96(dstRepOld, amount, "BUBBLE::_moveVotes: vote amount overflows");
                 _writeCheckpoint(dstRep, dstRepNum, dstRepOld, dstRepNew);
             }
         }
     }
 
     function _writeCheckpoint(address delegatee, uint32 nCheckpoints, uint96 oldVotes, uint96 newVotes) internal {
-      uint32 blockNumber = safe32(block.number, "Quick::_writeCheckpoint: block number exceeds 32 bits");
+      uint32 blockNumber = safe32(block.number, "BUBBLE::_writeCheckpoint: block number exceeds 32 bits");
 
       if (nCheckpoints > 0 && checkpoints[delegatee][nCheckpoints - 1].fromBlock == blockNumber) {
           checkpoints[delegatee][nCheckpoints - 1].votes = newVotes;
@@ -551,23 +551,23 @@ contract BUBBLE {
     }
 
     function _mint(address dst, uint rawAmount) internal {
-        require(dst != address(0), "Quick::mint: cannot transfer to the zero address");
+        require(dst != address(0), "BUBBLE::mint: cannot transfer to the zero address");
 
         // mint the amount
-        uint96 amount = safe96(rawAmount, "Quick::mint: amount exceeds 96 bits");
-        totalSupply = safe96(SafeMath.add(totalSupply, amount), "Quick::mint: totalSupply exceeds 96 bits");
+        uint96 amount = safe96(rawAmount, "BUBBLE::mint: amount exceeds 96 bits");
+        totalSupply = safe96(SafeMath.add(totalSupply, amount), "BUBBLE::mint: totalSupply exceeds 96 bits");
 
         // transfer the amount to the recipient
-        balances[dst] = add96(balances[dst], amount, "Quick::mint: transfer amount overflows");
+        balances[dst] = add96(balances[dst], amount, "BUBBLE::mint: transfer amount overflows");
         emit Transfer(address(0), dst, amount);
 
     }
 
     function _burn(address account, uint96 amount) internal {
-        require(account != address(0), "Quick:: burn from the zero address");
+        require(account != address(0), "BUBBLE:: burn from the zero address");
 
         balances[account] = sub96(balances[account], amount, "BUBBLE:: burn amount exceeds balance");
-        totalSupply = sub96(safe96(totalSupply, "BUBBLE:: totalSupply exceeds 96 bits"), amount, "Quick:: burn amount exceeds total supply");
+        totalSupply = sub96(safe96(totalSupply, "BUBBLE:: totalSupply exceeds 96 bits"), amount, "BUBBLE:: burn amount exceeds total supply");
         emit Transfer(account, address(0), amount);
     }
 }
