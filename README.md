@@ -1,6 +1,8 @@
-# BubbleSwap-Contracts
+# BubbleSwap
 
+**BubbleSwap** is concentrated liquidity swap for [Ethereum](https://www.ethereum.com/) blockchain. 
 
-- Website: [Bubbleswap.co](https://bubbleswap.co/)
+* [Website](https://bubbleswap.co)
+* [Documents](https:/docs.bubbleswap.co)
 
-- Twitter: [@BubbleswapDAO](https://twitter.com/bubbleswapdao)
+The current repository contains: 
